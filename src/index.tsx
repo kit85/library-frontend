@@ -4,11 +4,19 @@ import App from './App';
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 import HomePage from './screens/HomePage';
 
+import Signup from './screens/Register';
+import Login from './screens/Login';
+
+import Register from './screens/Register';
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
       <Route path='/' element={<HomePage />} />
+     
+      <Route path='/login' element={<Login />} />
+      <Route path='/signup' element={<Register />} />
     </Route>
   )
 );
