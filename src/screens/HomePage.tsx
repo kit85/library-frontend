@@ -14,7 +14,7 @@ const HomePage = () => {
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <Button
             component={Link}
-            to="/search"
+            to="/search/:search"
             sx={{
               color: "white",
               background: "#1976d2",
