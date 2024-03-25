@@ -49,7 +49,9 @@ const Navbar = () => {
             <Typography variant="h6" sx={{ display: "flex" }}>
               Library
             </Typography>
+
             <SearchBar/>
+            
             <Box sx={{ display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end' }}>
               <Typography variant="body1" component={Link} to="/" sx={{ textDecoration: 'none', color: 'inherit', marginRight: '1rem' }}>
                 Home

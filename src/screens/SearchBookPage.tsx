@@ -1,24 +1,21 @@
-import { Box, Grid, Card, Typography, CardMedia, CardContent, CardActionArea, Autocomplete, TextField, ListSubheader } from '@mui/material'
+import { Box, Grid, Card, Typography, CardMedia, CardContent, CardActionArea, Autocomplete, TextField, ListSubheader, CircularProgress } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import SearchBook from '../components/SearchBook'
 import { BookType } from '../types';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import SearchBar from '../components/SearchBar';
 
 
 export const SearchBookPage = () => {
   const [book, setBook] = useState<BookType[]>([]);
-  const [isLoading, seIsLoading] = useState(true);
-  const [httpError, setHttpError] = useState<Error | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [booksPerPage, setBooksPerPage] = useState(5);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchUrl, setSeacrhUrl] = useState<string>("");
-  const navigate=useNavigate();
-  
+  const [filteredBooks, setFilteredBooks] = useState<BookType[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+ 
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const queryParam = params.get("q");
+  const [searchTerm, setSearchTerm] = useState(queryParam || '');
   const baseUrl = "http://localhost:8080/api/v1/book"
-  const url = `${baseUrl}?page=${currentPage - 1}&size=${booksPerPage}`
-  const searh = `search?title=${searchTerm}`
-
 
 
   useEffect(() => {
@@ -30,6 +27,9 @@ export const SearchBookPage = () => {
         }
         const result = await response.json()
         setBook(result)
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 500);
       } catch (error) {
         console.log("Error fetching data:", error)
       }
@@ -37,65 +37,43 @@ export const SearchBookPage = () => {
     fetchBooks();
   }, []);
 
-  const handleSearchTermChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
-};
-
-  const filteredBooks = book.filter((book) =>
-    book.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
+  
+  useEffect(() => {
+    setSearchTerm(queryParam || '');
+    
+    let filteredBooks = book; // Declare filteredBooks variable at the top
+    if (queryParam) {
+      filteredBooks = book.filter((b) => // Use a different variable name for the book parameter inside filter
+      b.title.toLowerCase().includes(queryParam.toLowerCase())
+      );
+    } 
+    setFilteredBooks(filteredBooks);
+  }, [queryParam, book]);
+  
+  
+  
+  if (isLoading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+  
+  /*
   console.log(filteredBooks)
 
   const sortedBooks = filteredBooks.sort((a, b) => a.title.toLowerCase().localeCompare(b.title.toLowerCase()));
   console.log(sortedBooks);
+  */
 
 
 
   return (
     <Box>
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: "20px" }}>
-        <Autocomplete
-          id="grouped-demo"
-          options={book}
-         
-          groupBy={(book) => book.title.charAt(0).toUpperCase()}
-          getOptionLabel={(book) => book.title}
-          sx={{ width: 300 }}
-          isOptionEqualToValue={(option, value) =>
-            option.title === value.title
-          }
-          noOptionsText={"No Available Books"}
-          renderOption={(props, book) =>(
-            <Box component="li" {...props} key={book.id}>
-              {book.title}
-            </Box>
-          )}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              onChange={handleSearchTermChange}
-              label="Search Book"
-            />
-          )}
-          renderGroup={(params) => ( 
-            <div key={params.key}>
-              <ListSubheader>{params.group}</ListSubheader>
-              {params.children}
-            </div>
-          )}
-          onChange={(event, value) => {
-            if (value && typeof value !== "string") {
-              navigate(`/${value.category}/${value.id}`);
-            }
-          }}
-        />
 
-      </Box>
-
-
-      {filteredBooks.map((book, index) => (
-        <SearchBook  key={`${book.id}-${index}`} book={book}  />
+      {filteredBooks?.map((book, index) => (
+        <SearchBook key={`${book.id}-${index}`} book={book} />
       ))}
     </Box>
   )

@@ -8,17 +8,18 @@ import Signup from './screens/Register';
 import Login from './screens/Login';
 import SearchBookPage from './screens/SearchBookPage';
 import Register from './screens/Register';
-import BookPage from './screens/BookPage';
+
+import BookCheckoutPage from './screens/BookCheckoutPage';
 
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
       <Route path='/' element={<HomePage />} />
-      <Route path='/search/:search' element={<SearchBookPage />} />
+      <Route path='/search' element={<SearchBookPage />} />
       <Route path='/login' element={<Login />} />
       <Route path='/signup' element={<Register />} />
-      <Route path='/bookpage/:category/:id' element={<BookPage />} />
+      <Route path='/checkout/:category/:id' element={<BookCheckoutPage />} />
     </Route>
   )
 );

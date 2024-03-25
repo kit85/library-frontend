@@ -1,5 +1,5 @@
-import { ChevronLeft, ChevronRight } from '@mui/icons-material';
-import { Box, Button, Card, CardContent, Grid, IconButton, Slider, Typography } from '@mui/material';
+
+import { Box, Button,  Grid, IconButton,} from '@mui/material';
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { Link } from "react-router-dom"
 import Slide from '@mui/material/Slide';
@@ -78,7 +78,7 @@ const Carousel: FunctionComponent = () => {
                 </Grid>
             </Box>
             <Box sx={{ textAlign: "center", marginTop: "20px" }}>
-                <Button component={Link} to="/search" variant="contained" >
+                <Button component={Link} to="/search/:search" variant="contained" >
                     View More
                 </Button>
             </Box>
