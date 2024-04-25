@@ -1,15 +1,33 @@
 import { Autocomplete, Box, TextField, Typography } from '@mui/material';
-import React, {  useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BookType } from '../types';
 import { Search } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
 
-const SearchBar= () => {
+const SearchBar = () => {
   const [book, setBook] = useState<BookType[]>([]);
   const [input, setInput] = useState<string>('');
   const navigate = useNavigate();
   const baseUrl = "http://localhost:8080/api/v1/book"
+
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const response = await fetch(`${baseUrl}`);
+        if (!response.ok) {
+          throw new Error("Network response was not ok")
+        }
+        const result = await response.json()
+        setBook(result)
+     
+      } catch (error) {
+        console.log("Error fetching data:", error)
+      }
+    };
+    fetchBooks();
+  }, []);
+
 
 
   const handleInputChange = (event: any) => {
@@ -18,7 +36,7 @@ const SearchBar= () => {
 
   const handleSearch = () => {
     if (input.trim() !== "") {
-     
+
       navigate(`/search?q=${input}`);
     }
   };
@@ -40,7 +58,7 @@ const SearchBar= () => {
         id="grouped-demo"
         freeSolo
         disableClearable
-        options={book || []}
+        options={input.trim().length > 1 ?  book || []: []}
         getOptionLabel={(book: string | BookType) => {
           if (typeof book === 'string') {
             return book;
@@ -52,8 +70,8 @@ const SearchBar= () => {
         isOptionEqualToValue={(option, value) => option.title === value.title}
         noOptionsText="No Available Books"
         renderOption={(props, book) => (
-          <Box gap={2} component="li" {...props}>
-            <Box component="img" src={`data:image/png;base64,${book.img}`} alt="book" sx={{width:"10%", height:"auto"}}/>
+          <Box key={book.id} gap={2} component="li" {...props}>
+            <Box component="img" src={`data:image/png;base64,${book.img}`} alt="book" sx={{ width: "10%", height: "auto" }} />
             <Typography>{book.title}</Typography>
           </Box>
         )}
@@ -77,3 +95,7 @@ const SearchBar= () => {
 }
 
 export default SearchBar
+
+function setIsLoading(arg0: boolean) {
+  throw new Error('Function not implemented.');
+}

@@ -10,26 +10,6 @@ const HomePage = () => {
       <Box sx={{ width: "100%", height: "200px", position: "relative" }}>
         <Box sx={{ width: "100%", height: "250px", objectFit: "cover" }} component="img" src={"/images/books.jpg"} alt='Books' />
         <Typography sx={{ position: "absolute", bottom: "50%", color: "white", fontSize: "20px", textAlign: "center", width: "100%", fontWeight: "bold" }}>Find your Books</Typography>
-
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <Button
-            component={Link}
-            to="/search/:search"
-            sx={{
-              color: "white",
-              background: "#1976d2",
-              textTransform: "none",
-              position: "absolute",
-              bottom: "25%",
-              borderRadius: "8px",
-              boxShadow: "1px 1px 1px 1px"
-            }}
-            variant='contained'
-          >
-            Search Books
-          </Button>
-
-        </Box>
       </Box>
 
       <Box sx={{ display: "flex", marginTop: "80px" }} alignItems="center" justifyContent="center">
@@ -48,7 +28,6 @@ const HomePage = () => {
           </Grid>
         </Grid>
       </Box>
-
       <Carousel/>
     </Box>
   )
