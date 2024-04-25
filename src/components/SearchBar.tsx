@@ -96,6 +96,4 @@ const SearchBar = () => {
 
 export default SearchBar
 
-function setIsLoading(arg0: boolean) {
-  throw new Error('Function not implemented.');
-}
+
