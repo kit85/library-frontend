@@ -1,12 +1,15 @@
 import React from 'react'
-import {  Box,  IconButton, MenuItem, Toolbar, Typography } from '@mui/material'
+import { Box, IconButton, MenuItem, Toolbar, Typography } from '@mui/material'
 import AppBar from '@mui/material/AppBar'
-import { Link,  } from "react-router-dom"
+import { Link, } from "react-router-dom"
 import BookLogo from '@mui/icons-material/AutoStoriesTwoTone';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState, MouseEvent } from 'react';
 import Menu from '@mui/material/Menu';
 import SearchBar from './SearchBar';
+import BookCategoryPage from '../screens/BookCategoryPage';
+import BookCategoryRoute from './BookCategoryRoute';
+
 
 
 
@@ -26,6 +29,7 @@ const Navbar = () => {
 
   return (
     <Box>
+
       <AppBar position="fixed" sx={{}}>
         <Toolbar>
           <Box display="flex" flex={1} alignItems={"center"}>
@@ -50,8 +54,8 @@ const Navbar = () => {
               Library
             </Typography>
 
-            <SearchBar/>
-            
+            <SearchBar />
+
             <Box sx={{ display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end' }}>
               <Typography variant="body1" component={Link} to="/" sx={{ textDecoration: 'none', color: 'inherit', marginRight: '1rem' }}>
                 Home
@@ -62,6 +66,7 @@ const Navbar = () => {
             </Box>
           </Box>
         </Toolbar>
+        <BookCategoryRoute />
       </AppBar>
       <Toolbar />
     </Box>

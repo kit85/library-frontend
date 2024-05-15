@@ -78,7 +78,7 @@ const Carousel: FunctionComponent = () => {
                 </Grid>
             </Box>
             <Box sx={{ textAlign: "center", marginTop: "20px" }}>
-                <Button component={Link} to="/search/:search" variant="contained" >
+                <Button component={Link} to="/search" variant="contained" >
                     View More
                 </Button>
             </Box>

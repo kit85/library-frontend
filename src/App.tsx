@@ -5,13 +5,16 @@ import { Box } from '@mui/material';
 import "./index.css"
 import Navbar from './components/Navbar';
 
+import BookCategoryRoute from './components/BookCategoryRoute';
+
 
 
 function App() {
   return (
     <Box>
       <Navbar />
-      <Outlet/>
+        
+      <Outlet />
     </Box>
   );
 }

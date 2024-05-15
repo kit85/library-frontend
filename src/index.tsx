@@ -10,6 +10,7 @@ import SearchBookPage from './screens/SearchBookPage';
 import Register from './screens/Register';
 
 import BookCheckoutPage from './screens/BookCheckoutPage';
+import { BookCategoryPage } from './screens/BookCategoryPage';
 
 
 const router = createBrowserRouter(
@@ -20,6 +21,7 @@ const router = createBrowserRouter(
       <Route path='/login' element={<Login />} />
       <Route path='/signup' element={<Register />} />
       <Route path='/checkout/:category/:id' element={<BookCheckoutPage />} />
+      <Route path='/bookcategorypage' element={<BookCategoryPage />} />
     </Route>
   )
 );
